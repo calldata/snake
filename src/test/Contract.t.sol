@@ -6,7 +6,7 @@ import {Utilities} from "./utils/Utilities.sol";
 import {console} from "./utils/Console.sol";
 import {Hevm} from "./utils/Hevm.sol";
 
-contract ContractTest is DSTest {
+contract GameTest is DSTest {
     Hevm internal immutable hevm = Hevm(HEVM_ADDRESS);
 
     Utilities internal utils;
