@@ -7,7 +7,7 @@ import {console} from "./utils/Console.sol";
 import {Hevm} from "./utils/Hevm.sol";
 
 import "../Game.sol";
-import "../snake.sol";
+import "../Snake.sol";
 
 contract GameTest is DSTest {
     Hevm internal immutable hevm = Hevm(HEVM_ADDRESS);
