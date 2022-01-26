@@ -23,9 +23,6 @@ contract Game is Ownable {
     /// @dev token used in this game
     IERC20 public token;
 
-    /// @dev fee address
-    address public fee;
-
     /// @dev current allocated max room index
     uint256 public roomIndex;
 
@@ -44,9 +41,8 @@ contract Game is Ownable {
     /// @dev when is the player join in
     mapping(address => uint256) public playerJoinTime;
 
-    constructor(IERC20 _token, address _fee) {
+    constructor(IERC20 _token) {
         token = _token;
-        fee = _fee;
     }
 
     /// @dev rooms that player can join in
@@ -147,7 +143,10 @@ contract Game is Ownable {
         uint256 reward3 = (total * 18) / 100;
         token.safeTransfer(thirdPlace, reward3 * 10**18);
 
-        token.safeTransfer(fee, (total - reward1 - reward2 - reward3) * 10**18);
+        token.safeTransfer(
+            address(this),
+            (total - reward1 - reward2 - reward3) * 10**18
+        );
 
         delete roomState[roomId];
 
@@ -183,5 +182,10 @@ contract Game is Ownable {
         whichRoom[player] = roomIndex_;
         playerJoinTime[player] = block.timestamp;
         notReadyRoom.push(roomIndex_);
+    }
+
+    /// @dev withraw all fee to `to`
+    function withdrawFee(address to) external onlyOwner {
+        IERC20(token).safeTransfer(to, IERC20(token).balanceOf(address(this)));
     }
 }

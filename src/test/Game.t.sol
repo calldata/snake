@@ -22,16 +22,7 @@ contract GameTest is DSTest {
         users = utils.createUsers(10);
 
         snake = new Snake("snake", "SNK");
-        game = new Game(snake, address(1));
-    }
-
-    function testExample() public {
-        address payable alice = users[0];
-        address payable bob = users[1];
-        hevm.prank(alice);
-        (bool sent, ) = bob.call{value: 10 ether}("");
-        assertTrue(sent);
-        assertGt(bob.balance, alice.balance);
+        game = new Game(snake);
     }
 
     function testCreateRoom() public {
@@ -101,7 +92,7 @@ contract GameTest is DSTest {
         uint256 balanceuser3 = snake.balanceOf(users[3]);
         assertEq(balanceuser3, 180 * 1 ether);
 
-        uint256 fee = snake.balanceOf(address(1));
+        uint256 fee = snake.balanceOf(address(game));
         assertEq(
             100 * 10 * 1 ether - balanceuser1 - balanceuser2 - balanceuser3,
             fee
