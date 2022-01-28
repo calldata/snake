@@ -72,11 +72,7 @@ contract Game is Ownable {
             uint256 cost = state.cost;
 
             for (uint256 i = 0; i < playerLength; i++) {
-                token.safeTransferFrom(
-                    players[i],
-                    address(this),
-                    cost * 10**18
-                );
+                token.safeTransferFrom(players[i], address(this), cost * 1e18);
             }
 
             emit GameStart(roomId);
@@ -135,17 +131,17 @@ contract Game is Ownable {
         uint256 total = state.cost * 10;
 
         uint256 reward1 = (total * 45) / 100;
-        token.safeTransfer(firstPlace, reward1 * 10**18);
+        token.safeTransfer(firstPlace, reward1 * 1e18);
 
         uint256 reward2 = (total * 27) / 100;
-        token.safeTransfer(secondPlace, reward2 * 10**18);
+        token.safeTransfer(secondPlace, reward2 * 1e18);
 
         uint256 reward3 = (total * 18) / 100;
-        token.safeTransfer(thirdPlace, reward3 * 10**18);
+        token.safeTransfer(thirdPlace, reward3 * 1e18);
 
         token.safeTransfer(
             address(this),
-            (total - reward1 - reward2 - reward3) * 10**18
+            (total - reward1 - reward2 - reward3) * 1e18
         );
 
         delete roomState[roomId];
